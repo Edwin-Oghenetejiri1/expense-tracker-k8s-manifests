@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend
+  namespace: expense-tracker
   labels:
     app: backend
 spec:
@@ -15,12 +16,20 @@ spec:
         app: backend
     spec:
       containers:
-      - name: backend
-        image: oghenetejiri798/expense-tracker-backend:latest
-        ports:
-        - containerPort: 5000
-        env:
-        - name: MONGO_URI
-          value: "mongodb://mongodb:27017/expense-tracker"
-        - name: PORT
-          value: "5000"
+        - name: backend
+          image: oghenetejiri798/expense-tracker-backend:latest
+          ports:
+            - containerPort: 5000
+          env:
+            - name: MONGO_URI           # ✅ now correctly under env
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: MONGO_URI
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "300m"

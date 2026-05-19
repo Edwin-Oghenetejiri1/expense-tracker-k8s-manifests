@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mongo-pvc
+  name: mongodb-pvc
   namespace: expense-tracker
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: gp3
+  storageClassName: gp2          # default EKS storage class, backed by EBS
   resources:
     requests:
-      storage: 1Gi
+      storage: 5Gi

@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
+  namespace: expense-tracker    
   labels:
     app: frontend
 spec:
@@ -15,7 +16,17 @@ spec:
         app: frontend
     spec:
       containers:
-      - name: frontend
-        image: oghenetejiri798/expense-tracker-frontend:latest
-        ports:
-        - containerPort: 3000
+        - name: frontend
+          image: oghenetejiri798/expense-tracker-frontend:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: REACT_APP_API_URL
+              value: ""              
+          resources:                
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "200m"
