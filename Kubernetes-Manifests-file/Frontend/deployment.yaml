@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: oghenetejiri798/expense-tracker-frontend:latest
+          image: oghenetejiri798/expense-tracker-frontend:26261852941
           ports:
             - containerPort: 3000
           env:
