@@ -17,15 +17,29 @@ spec:
     spec:
       containers:
         - name: backend
-          image: oghenetejiri798/expense-tracker-backend:26261852942
+          image: oghenetejiri798/expense-tracker-backend:latest
           ports:
             - containerPort: 5000
           env:
-            - name: MONGO_URI           # ✅ now correctly under env
+            - name: MONGO_URI
               valueFrom:
                 secretKeyRef:
                   name: mongodb-secret
                   key: MONGO_URI
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            failureThreshold: 3
           resources:
             requests:
               memory: "256Mi"

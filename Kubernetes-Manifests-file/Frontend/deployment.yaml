@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
-  namespace: expense-tracker    
+  namespace: expense-tracker
   labels:
     app: frontend
 spec:
@@ -19,8 +19,22 @@ spec:
         - name: frontend
           image: oghenetejiri798/expense-tracker-frontend:26928237906
           ports:
-            - containerPort: 80           
-          resources:                
+            - containerPort: 80
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            failureThreshold: 3
+          resources:
             requests:
               memory: "128Mi"
               cpu: "100m"
