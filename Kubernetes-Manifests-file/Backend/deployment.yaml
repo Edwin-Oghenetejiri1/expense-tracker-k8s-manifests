@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: oghenetejiri798/expense-tracker-backend:latest
+          image: oghenetejiri798/expense-tracker-backend:27029175121
           ports:
             - containerPort: 5000
           env:
